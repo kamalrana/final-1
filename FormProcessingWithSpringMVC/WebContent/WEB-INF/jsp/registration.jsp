@@ -13,19 +13,6 @@ p { color:red; }
 	<body>
 		<h1>Registration Form</h1><br />
 	<form:form commandName="USER" onSubmit="return validate(this.name,this.standard,this.age,this.phone,this.email,false);">
-
-	<%-- onSubmit="return (validateNumber(this.phone, 'Please enter a phone number, numbers only', 5, 10) && 
-	validateEmail(this.email, 'Please enter a correct email address or leave the field blank', false) && 
-validateString(this.name, 'Please enter your name', 3, 15) && 
-validateString(this.standard, 'Please correct education qualification', 3, 15) && 
-validateNumber(this.age, 'Please enter age, numbers only', 2, 2)
-&& check() && validate(this.name,this.standard,this.age,this.phone,this.email)
-) ;"> --%>
-
-<!--  && 
-		validateString(this.firstName, 'Please enter your first name', 3, 15)
-		&& validateString(this.lastName, 'Please enter your last name', 3, 15)) -->
-		
 		<table>
 			<tr><td colspan="2"><form:errors path="age" cssStyle="color : red;"/></td></tr>
 			<tr><td>Name : </td><td><form:input id="name" path="name" onmouseover="txtToolTip(this.id)"/></td>
