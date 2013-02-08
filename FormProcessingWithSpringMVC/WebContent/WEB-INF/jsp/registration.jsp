@@ -53,7 +53,6 @@ validateNumber(this.age, 'Please enter age, numbers only', 2, 2)
 </body>
 	
 <script type="text/javascript">
-var valid=1;
 function txtToolTip(txtname)
 {
 	if(document.getElementById('Standard')){
@@ -78,80 +77,86 @@ document.getElementById('Standard').title = 'like M.Tech,B.Tech,MCA,BCA. etc';
 		document.getElementById('phone').title = 'enter only phone number between 5-10 numbers';
 			}
 }
-	function validate(name,standard,age,phone,email,optional){
-		if(name.id=='name')
-				{
-					var field=name;
-					if(!field.value || field.value.length < 3 || field.value.max > 15)
-						{
-						valid=0;
-						$("#"+field.id+"Error").show("slow");
-						}
-					else{
-						valid=1;
-						$("#"+field.id+'Error').hide();}
-				}
-				if(standard.id=='standard')
-				{
-					var field=standard;
-					if(!field.value || field.value.length < 3 || field.value.max > 15)
-						{
-						valid=0;
-						$("#"+field.id+"Error").show("slow");
-						}
-					else{
-						valid=1;
-						$("#"+field.id+'Error').hide();}
-				}
-				
-				if(age.id=='age')
-				{
-					var field=age;
-					if (parseInt(field.value) != field.value ||  field.value.length < 2 || field.value.length > 2)
-						{
-						valid=0;
-						$("#"+field.id+"Error").show("slow");
-						}
-					else{
-						valid=1;
-						$("#"+field.id+'Error').hide();}
-				}
-				if(phone.id=='phone')
-				{
-					var field=phone;
-					if (parseInt(field.value) != field.value ||  field.value.length < 5 || field.value.length > 10)
-						{
-						valid=0;
-						$("#"+field.id+"Error").show("slow");
-						}
-					else{
-						valid=1;
-						$("#"+field.id+'Error').hide();}
-				}
-				if(email.id=='email')
-				{
-					var field=email;
-					if (!field.value && optional) {
-					valid=1;
+function validate(name,standard,age,phone,email,optional){
+	var valid=1;
+	if(name.id=='name')
+			{
+				var field=name;
+				var isVisible = document.getElementById(field.id+'Error').offsetWidth > 0 || document.getElementById(field.id+'Error').offsetHeight > 0;
+				if(!field.value || field.value.length < 3 || field.value.max > 15)
+					{
+					valid=0;
+					$("#"+field.id+"Error").show("slow");
 					}
-					var x=email.value;
-					var atpos=x.indexOf("@");
-					var dotpos=x.lastIndexOf(".");
-					if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-						{
-						valid=0;
-						$("#"+field.id+"Error").show("slow");
-						email.focus();  
-						email.select();  
-						}
-					else{
-						valid=1;
-						$("#"+field.id+'Error').hide();}
+				else if(isVisible){
+					valid=1;
+					$("#"+field.id+'Error').hide();}
+			}
+			if(standard.id=='standard')
+			{
+				var field=standard;
+				var isVisible = document.getElementById(field.id+'Error').offsetWidth > 0 || document.getElementById(field.id+'Error').offsetHeight > 0;
+				if(!field.value || field.value.length < 3 || field.value.max > 15)
+					{
+					valid=0;
+					$("#"+field.id+"Error").show("slow");
+					}
+				else if(isVisible){
+					valid=1;
+					$("#"+field.id+'Error').hide();}
+			}
+			
+			if(age.id=='age')
+			{
+				var field=age;
+				var isVisible = document.getElementById(field.id+'Error').offsetWidth > 0 || document.getElementById(field.id+'Error').offsetHeight > 0;
+				if (parseInt(field.value) != field.value ||  field.value.length < 2 || field.value.length > 2)
+					{
+					valid=0;
+					$("#"+field.id+"Error").show("slow");
+					}
+				else if(isVisible){
+					valid=1;
+					$("#"+field.id+'Error').hide();}
+			}
+			if(phone.id=='phone')
+			{
+				var field=phone;
+				var isVisible = document.getElementById(field.id+'Error').offsetWidth > 0 || document.getElementById(field.id+'Error').offsetHeight > 0;
+				if (parseInt(field.value) != field.value ||  field.value.length < 5 || field.value.length > 10)
+					{
+					valid=0;
+					$("#"+field.id+"Error").show("slow");
+					}
+				else if(isVisible){
+					valid=1;
+					$("#"+field.id+'Error').hide();}
+			}
+			if(email.id=='email')
+			{
+				var field=email;
+				var isVisible = document.getElementById(field.id+'Error').offsetWidth > 0 || document.getElementById(field.id+'Error').offsetHeight > 0;
+				if (!field.value && optional) {
+				valid=1;
 				}
-	if(!valid){
-		return false
-		}
+				var x=email.value;
+				var atpos=x.indexOf("@");
+				var dotpos=x.lastIndexOf(".");
+				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+					{
+					valid=0;
+					$("#"+field.id+"Error").show("slow");
+					email.focus();  
+					email.select();  
+					}
+				else if(isVisible){
+					valid=1;
+					$("#"+field.id+'Error').hide();}
+			}
+if(!valid){
+	return false
 	}
+}
 
 </script>
 </html>
