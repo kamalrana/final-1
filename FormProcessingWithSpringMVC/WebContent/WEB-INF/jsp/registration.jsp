@@ -12,7 +12,7 @@ p { color:red; }
 </head>
 	<body>
 		<h1>Registration Form</h1><br />
-	<form:form commandName="USER" onSubmit="return validate(this.name,this.standard,this.age,this.phone,this.email);">
+	<form:form commandName="USER" onSubmit="return validate(this.name,this.standard,this.age,this.phone,this.email,false);">
 
 	<%-- onSubmit="return (validateNumber(this.phone, 'Please enter a phone number, numbers only', 5, 10) && 
 	validateEmail(this.email, 'Please enter a correct email address or leave the field blank', false) && 
@@ -31,7 +31,7 @@ validateNumber(this.age, 'Please enter age, numbers only', 2, 2)
 			<tr><td>Name : </td><td><form:input id="name" path="name" onmouseover="txtToolTip(this.id)"/></td>
 			<td><p id="nameError" style="display: none">Please enter your Correct name text</p></td>
 			</tr>
-			<tr><td>Standard : </td><td><form:input id="Standard" path="standard" onmouseover="txtToolTip(this.id)"/></td>
+			<tr><td>Standard : </td><td><form:input id="standard" path="standard" onmouseover="txtToolTip(this.id)"/></td>
 			<td><p id="standardError" style="display: none">Please enter your Correct name text</p></td>
 			</tr>
 			<tr><td>Age : </td><td><form:input id="age" path="age" onmouseover="txtToolTip(this.id)" /></td>
@@ -78,101 +78,81 @@ document.getElementById('Standard').title = 'like M.Tech,B.Tech,MCA,BCA. etc';
 		document.getElementById('phone').title = 'enter only phone number between 5-10 numbers';
 			}
 }
-function validate(name,standard,age,phone,email){
-	var isVisible = document.getElementById(name.id+'Error').offsetWidth > 0 || document.getElementById(name.id+'Error').offsetHeight > 0;
-	alert('isvisible '+isVisible+"	"+name.id);
-	if(name.id=='name')
-	{
-		alert('IN');
-		if(!name.value || name.value.length < 3 || name.value.max > 15)
-			{
-			alert('in first if');
-			$("#"+name.id+"Error").show("slow");
-			return false;
-			}
-		if(isVisible)
-			{
-			alert('visible');
-			$("#"+name.id+'Error').hide();}
-		return false;
-	}
-
-		
-}
-function validateNumber(field, msg, min, max) {
-	if (!min) { min = 0 }  
-	if (!max) { max = 255 }  
-	if (parseInt(field.value) != field.value ||  field.value.length < min || field.value.length > max) {
-		valid=0;
-		/* if(field.id=='phone')
-		alert('field is :' +field.id); */
-		
-		if(field.id=='phone'){
-	 	$("#phoneError").show("slow");
-		}
-	else
-		{
-		$("#ageError").show("slow");
-		}
-	/* field.focus();  
-	field.select(); */ 
-	return true;  
-	}
-	else{
-		if(field.id=='phone'){
-			 $("#phoneError").hide();
-				}
-			else
+	function validate(name,standard,age,phone,email,optional){
+		if(name.id=='name')
 				{
-				$("#ageError").hide();
+					var field=name;
+					if(!field.value || field.value.length < 3 || field.value.max > 15)
+						{
+						valid=0;
+						$("#"+field.id+"Error").show("slow");
+						}
+					else{
+						valid=1;
+						$("#"+field.id+'Error').hide();}
 				}
-	}
-	return true;  
-	}
-
-function validateString(field, msg, min, max) {  
-	if (!min) { min = 1 }  
-	if (!max) { max = 65535 }  
-	if (!field.value || field.value.length < min || field.value.max > max) {  
-		valid=0;
-		if(field.id=='name'){
-		 $("#nameError").show("slow");
+				if(standard.id=='standard')
+				{
+					var field=standard;
+					if(!field.value || field.value.length < 3 || field.value.max > 15)
+						{
+						valid=0;
+						$("#"+field.id+"Error").show("slow");
+						}
+					else{
+						valid=1;
+						$("#"+field.id+'Error').hide();}
+				}
+				
+				if(age.id=='age')
+				{
+					var field=age;
+					if (parseInt(field.value) != field.value ||  field.value.length < 2 || field.value.length > 2)
+						{
+						valid=0;
+						$("#"+field.id+"Error").show("slow");
+						}
+					else{
+						valid=1;
+						$("#"+field.id+'Error').hide();}
+				}
+				if(phone.id=='phone')
+				{
+					var field=phone;
+					if (parseInt(field.value) != field.value ||  field.value.length < 5 || field.value.length > 10)
+						{
+						valid=0;
+						$("#"+field.id+"Error").show("slow");
+						}
+					else{
+						valid=1;
+						$("#"+field.id+'Error').hide();}
+				}
+				if(email.id=='email')
+				{
+					var field=email;
+					if (!field.value && optional) {
+					valid=1;
+					}
+					var x=email.value;
+					var atpos=x.indexOf("@");
+					var dotpos=x.lastIndexOf(".");
+					if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+						{
+						valid=0;
+						$("#"+field.id+"Error").show("slow");
+						email.focus();  
+						email.select();  
+						}
+					else{
+						valid=1;
+						$("#"+field.id+'Error').hide();}
+				}
+	if(!valid){
+		return false
 		}
-	else{
-		 $("#standardError").show("slow");
 	}
-	field.focus();  
-	field.select();  
-	return true;  
-	}  
-	return true;  
 
-	}
-	
- function validateEmail(email, msg, optional)
- {
-	 if (!email.value && optional) {
-			return true;  
-		}  
-		//var re_mail = "/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z])+$/";
-		var x=email.value;
-var atpos=x.indexOf("@");
-var dotpos=x.lastIndexOf(".");
-if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-  {
-	valid=0;
-  $("#emailError").show("slow");
-  email.focus();  
-	email.select();  
-  return true;
-  }
-}
- function check(){
-	 if(valid==0){
-		 alert('in check');
-		 return false;
-	 }
- }
 </script>
 </html>
 
